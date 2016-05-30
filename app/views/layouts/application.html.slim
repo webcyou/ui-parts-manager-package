@@ -1,0 +1,18 @@
+doctype 5
+  html
+    head
+      = render 'layouts/meta_tags'
+      = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+      = javascript_include_tag 'application', 'data-turbolinks-track' => true
+
+    body
+      = render 'shared/header'
+
+      - if notice
+        p.alert.alert-success
+          = notice
+      - else
+        p.alert.alert-danger
+
+      section.container
+        = yield

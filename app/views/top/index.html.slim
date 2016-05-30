@@ -1,0 +1,70 @@
+#uipm-app-container
+  #uipm-app-section ng-controller="MainController"
+    #uipm-app-header
+      .uipm-app-header-wrap
+        p.uipm-app-logo-main
+        .uipm-app-cssInput
+          button.uipm-app-btn ng-click="onClickAddAssets(assets)"
+            | 追加
+          //input type="text" placeholder="読み込むcssを入力" ng-model="assets"
+
+    #uipm-app-readFiles-view
+      p.uipm-app-assetsSwitch ng-click="onClickAssetsSwitch()"
+        a ng-switch="isShowAssets"
+          span ng-switch-when="false"
+            | ▼ Show
+          span ng-switch-when="true"
+            | ▲ Hide
+            | Assets Path
+
+      .uipm-app-title ng-show="isShowAssets"
+        ul.uipm-app-titleList
+          li.uipm-app-col1 種類
+          li.uipm-app-col2 パス
+
+      .uipm-app-readFiles ng-show="isShowAssets"
+        ul.uipm-app-itemList ng-repeat="assets in assetsList track by $index"
+          li.uipm-app-col1 ng-cloak=""
+            | {{assets.type}}
+          li.uipm-app-col2 ng-cloak=""
+            | {{assets.path}}
+            p.uipm-app-delete-assetsBtn ng-click="onClickDeleteAssets(assets)"
+              | -
+
+    .uipm-app-contents
+      nav#uipm-app-nav-menu
+        .uipm-app-tabMenu
+          ul.uipm-app-tabMenuList
+            li ng-repeat="category in categoryList track by $index" ng-click="onClickTabChange($index)" ng-class="{cur: selectedTabNum === $index}" ng-dblclick="onDblEditCategory(category)" ng-style="{'width': category.len + 'px'}"
+              //input type="text" ng-readonly="!category.edit" ng-model="category.name" ng-blur="editResetCategory(category)" ng-style="{'width': category.len + 'px'}"
+
+        p.uipm-app-add-category-btn ng-click="onClickAddCategory()"
+          | +
+        p.uipm-app-delete-category-btn ng-click="onClickDeleteCategory(categoryList[selectedTabNum])"
+          | -
+
+      #uipm-app-main-view
+        .uipm-app-title
+          ul.uipm-app-titleList
+            li.uipm-app-col1 Class Name
+            li.uipm-app-col2 Parts Design
+            li.uipm-app-col3 HTML
+
+        .uipm-app-main-InputView
+          ul.uipm-app-itemList ng-repeat="item in categoryList[selectedTabNum].item track by $index"
+            li.uipm-app-col1
+              ul.cssClassList
+                li ng-repeat="cssClass in item.getCssClass(item.dom) track by $index"
+                  | {{cssClass}}
+            li.uipm-app-col2
+              div ng-bind-html="item.parseHTML"
+            li.uipm-app-col3 item-list=""
+              p.uipm-app-nav-text ng-if="!item.dom && !item.edit"
+                | ダブルクリックで編集できます。
+                br
+                | HTML要素を入力してください。
+              //textarea ng-show="item.dom || item.edit" name="" id="" cols="30" rows="4" ng-disabled="!item.edit" ng-model="item.dom" ng-blur="editResetItem(item)"></textarea>
+              p.uipm-app-delete-itemBtn ng-click="onClickDeleteItem(selectedTabNum, $index, item)"
+                | -
+        p.uipm-app-add-itemBtn ng-click="onClickAddItem(selectedTabNum, categoryList[selectedTabNum])"
+          | +
