@@ -32,7 +32,7 @@ gem 'slim-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
-# Javascript
+# Front Assets
 gem 'angularjs-rails'
 gem 'angularjs-rails-resource', '~> 2.0'
 gem 'underscore-rails'

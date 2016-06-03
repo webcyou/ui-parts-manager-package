@@ -11,7 +11,7 @@
  * file per style scope.
  *
  *= require_self
+ *= base
+ *= page
+ *= parts
  */
-@import "base/common_inc";
-@import "parts";
-@import "page";
